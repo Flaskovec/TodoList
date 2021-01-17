@@ -1,3 +1,5 @@
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState } from "react";
 import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
@@ -73,12 +75,12 @@ function App() {
   };
 
   const changeTodolistTitle = (id: string, newTitle: string) => {
-    const todolist = todolists.find(tl=> tl.id === id)
+    const todolist = todolists.find((tl) => tl.id === id);
     if (todolist) {
-      todolist.title = newTitle
-      setTodolists([...todolists])
+      todolist.title = newTitle;
+      setTodolists([...todolists]);
     }
-  }
+  };
 
   const [tasksObj, setTasks] = useState<TasksStateType>({
     [todolistId1]: [
@@ -105,8 +107,21 @@ function App() {
     setTasks({ ...tasksObj, [todolist.id]: [] });
   }
 
+  
+
   return (
     <div className="App">
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start"  color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" >
+            News
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
       <AddItemForm addItem={addTodolist} />
       {todolists.map((tl) => {
         let tasksForTodoList = tasksObj[tl.id];
