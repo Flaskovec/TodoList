@@ -1,34 +1,36 @@
-import { IconButton, TextField } from "@material-ui/core";
-import { AddCircle } from "@material-ui/icons";
+import { IconButton, TextField } from '@material-ui/core';
+import { AddCircle } from '@material-ui/icons';
 
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
   addItem: (title: string) => void;
 };
-export function AddItemForm(props: AddItemFormPropsType) {
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
-    if (e.charCode === 13) {
+    if (error) {
+      setError(null);
+    }
+    if (e.key === 'Enter') {
       props.addItem(newTaskTitle);
-      setNewTaskTitle("");
+      setNewTaskTitle('');
     }
   };
 
   const [error, setError] = useState<string | null>(null);
 
   const addTask = () => {
-    if (newTaskTitle.trim() !== "") {
+    if (newTaskTitle.trim() !== '') {
       props.addItem(newTaskTitle.trim());
-      setNewTaskTitle("");
+      setNewTaskTitle('');
     } else {
-      setError("Field is required");
+      setError('Field is required');
     }
   };
 
@@ -46,8 +48,8 @@ export function AddItemForm(props: AddItemFormPropsType) {
         helperText={error}
       />
       <IconButton size="small" color="primary" onClick={addTask}>
-        <AddCircle fontSize="large"  />
+        <AddCircle fontSize="large" />
       </IconButton>
     </div>
   );
-}
+});
